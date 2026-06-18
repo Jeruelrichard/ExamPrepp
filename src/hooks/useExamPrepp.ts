@@ -10,11 +10,11 @@
  */
 
 import { useState, useCallback } from 'react';
-import { analyzePastQuestions, generateStudyGuide } from '../services/gemini.js';
+import { analyzePastQuestions, generateStudyGuide } from '../services/gemini';
 
 export function useExamPrepp() {
   // ── Phase 1 state ──────────────────────────────
-  const [pastQuestionFiles, setPastQuestionFiles] = useState([]);
+  const [pastQuestionFiles, setPastQuestionFiles] = useState<File[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [predictions, setPredictions] = useState([]);
   const [course, setCourse] = useState('');
@@ -24,7 +24,7 @@ export function useExamPrepp() {
   const [phaseOneWarning, setPhaseOneWarning] = useState(null);
 
   // ── Phase 2 state ──────────────────────────────
-  const [lectureNoteFiles, setLectureNoteFiles] = useState([]);
+  const [lectureNoteFiles, setLectureNoteFiles] = useState<File[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [guide, setGuide] = useState('');
   const [topicsCovered, setTopicsCovered] = useState([]);

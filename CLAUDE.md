@@ -22,6 +22,42 @@ exam topics then generates a grounded study guide from the student's own materia
 
 ---
 
+## Git workflow — READ BEFORE TOUCHING ANY FILE
+
+### Branch protection
+- `main` is protected — no direct pushes, ever, including from Jeruel
+- Every change goes through a feature branch + pull request
+- 1 required approval before merging (not 2 — keeps the 48-hour sprint moving)
+
+### Before starting any task
+Always branch off main first:
+```
+git checkout main
+git pull origin main
+git checkout -b <prefix>/<short-description>
+```
+
+### Branch naming conventions
+```
+feat/     — new feature          (feat/phase-two-prompt)
+fix/      — bug fix              (fix/gemini-retry-logic)
+chore/    — tooling, deps, config (chore/vite-setup)
+design/   — Jennifer's CSS drops  (design/phase-one-tokens)
+```
+
+### PR review routing
+- Hook or component changes → tag **Henry** (frontend)
+- Vercel Functions or Supabase changes → tag **Cligence** (backend)
+- Crosses both layers → tag both, but only one approval needed to unblock merge
+- Design PRs → Henry reviews (he owns CSS integration)
+
+### What Claude Code does vs. what the human does
+- Claude Code: creates the branch, makes the changes, commits, pushes
+- Jeruel: opens the PR on GitHub, writes the description, tags the reviewer, merges after approval
+- Claude Code never merges — that is always Jeruel's action
+
+---
+
 ## Core user flow — TWO PHASES (critical, never collapse into one)
 
 ### Phase 1 — Past questions analysis

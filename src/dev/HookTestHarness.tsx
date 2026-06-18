@@ -2,9 +2,9 @@
 // Zero styling, zero design-system dependency — safe to delete entirely
 // once Jennifer's real Phase 1 / Phase 2 components are wired up.
 
-import { useExamPrepp } from '../hooks/useExamPrepp.js';
+import { useExamPrepp } from '../hooks/useExamPrepp';
 
-function fileNames(fileList) {
+function fileNames(fileList: File[]) {
   return Array.from(fileList).map((f) => `${f.name} (${Math.round(f.size / 1024)} KB)`);
 }
 
@@ -42,7 +42,7 @@ export default function HookTestHarness() {
         type="file"
         multiple
         accept=".pdf,image/*"
-        onChange={(e) => setPastQuestionFiles(e.target.files)}
+        onChange={(e) => setPastQuestionFiles(Array.from(e.target.files ?? []))}
       />
       <p>Files: {pastQuestionFiles.length ? fileNames(pastQuestionFiles).join(', ') : 'none'}</p>
       <button onClick={runPhaseOne} disabled={isAnalyzing || pastQuestionFiles.length === 0}>
@@ -70,7 +70,7 @@ export default function HookTestHarness() {
         type="file"
         multiple
         accept=".pdf,image/*"
-        onChange={(e) => setLectureNoteFiles(e.target.files)}
+        onChange={(e) => setLectureNoteFiles(Array.from(e.target.files ?? []))}
       />
       <p>Files: {lectureNoteFiles.length ? fileNames(lectureNoteFiles).join(', ') : 'none'}</p>
       <button onClick={runPhaseTwo} disabled={isGenerating || predictions.length === 0}>

@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   ExamPrepp design tokens (Tailwind v4 @theme)
+   These generate utilities, e.g.:
+     bg-indigo, text-indigo, border-indigo
+     bg-surface, text-ink, text-success
+     font-body, font-display, font-wordmark
+   Brand source of truth: CLAUDE.md / PRD §11.2
+   ───────────────────────────────────────────── */
+@theme {
+  /* Colour */
+  --color-indigo: #4f46e5;        /* Primary — Deep Indigo */
+  --color-indigo-light: #818cf8;  /* Indigo-400, for dark backgrounds */
+  --color-ink: #111827;           /* Text / Ink */
+  --color-surface: #f9fafb;       /* Off-white card / section background */
+  --color-success: #10b981;       /* Verified / success — functional use only */
+  /* NOTE: amber is intentionally absent — forbidden by the design system. */
+
+  /* Type */
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-wordmark: "Dancing Script", cursive;
+
+  /* Radius — 12–14px on cards and inputs */
+  --radius-card: 14px;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background-color: #ffffff;
+}

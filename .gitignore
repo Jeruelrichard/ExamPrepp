@@ -2,3 +2,6 @@ node_modules
 dist
 .env
 .env.local
+
+# Claude Code local tooling (preview config + machine-local settings)
+.claude/

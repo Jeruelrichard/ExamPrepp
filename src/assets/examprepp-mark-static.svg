@@ -1,0 +1,14 @@
+<svg width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- ExamPrepp "Rising Insight" mark — indigo badge variant for light backgrounds -->
+  <path d="M18.9583 0H7.04167C3.15266 0 0 2.78889 0 6.22917V16.7708C0 20.2111 3.15266 23 7.04167 23H18.9583C22.8473 23 26 20.2111 26 16.7708V6.22917C26 2.78889 22.8473 0 18.9583 0Z" fill="#4F46E5"/>
+  <g>
+    <path d="M13 9.82292V3.59375" stroke="white" stroke-width="2.3" stroke-linecap="round"/>
+    <path d="M12.0738 9.96667L10.0371 5.01208" stroke="white" stroke-width="2.3" stroke-linecap="round"/>
+    <path d="M13.9262 9.96667L15.9629 5.01208" stroke="white" stroke-width="2.3" stroke-linecap="round"/>
+    <path d="M11.2613 10.3835L8.125 7.08208" stroke="white" stroke-opacity="0.4" stroke-width="2.3" stroke-linecap="round"/>
+    <path d="M14.7387 10.3835L17.875 7.08208" stroke="white" stroke-opacity="0.4" stroke-width="2.3" stroke-linecap="round"/>
+  </g>
+  <path d="M13 12.9375C11.0139 12.5222 9.11806 12.2826 7.3125 12.2188V16.2917C9.11806 16.675 11.0139 17.0424 13 17.3937V12.9375Z" fill="white"/>
+  <path d="M13 12.9375C14.9861 12.5222 16.8819 12.2826 18.6875 12.2188V16.2917C16.8819 16.675 14.9861 17.0424 13 17.3937V12.9375Z" fill="white"/>
+  <path d="M13 13.0812V17.2021" stroke="#4F46E5" stroke-width="1.1" stroke-linecap="round"/>
+</svg>

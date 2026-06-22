@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode — Vite resolves modules, tsc only type-checks */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Lenient on purpose: this is a JS->TS migration mid-hackathon.
+       Tighten (strict: true) incrementally once the core flow is stable. */
+    "strict": false,
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": ["src"],
+  /* blockchain.ts imports @solana/* packages that aren't installed yet
+     (backend installs them — see the file header). It's not in the build
+     graph, so excluding it keeps `tsc` green. Remove this line once the
+     Solana deps are added. */
+  "exclude": ["src/services/blockchain.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

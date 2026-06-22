@@ -15,7 +15,7 @@ import {
   PROMPT_GENERATE_STUDY_GUIDE,
   PROMPT_GENERATE_FLASHCARDS,
   PROMPT_GENERATE_QUIZ,
-} from './prompts.js';
+} from './prompts';
 
 // ─────────────────────────────────────────────
 // Config
@@ -46,7 +46,8 @@ async function fileToGeminiPart(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
-      const base64 = reader.result.split(',')[1];
+      // readAsDataURL always yields a string ("data:<mime>;base64,<data>").
+      const base64 = (reader.result as string).split(',')[1];
       resolve({
         inlineData: {
           mimeType: file.type,
@@ -81,7 +82,7 @@ async function callGemini(parts, { jsonMode = false, temperature = 0.2 } = {}) {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   if (!apiKey) throw new Error('VITE_GEMINI_API_KEY is not set in environment variables.');
 
-  const generationConfig = { temperature };
+  const generationConfig: { temperature: number; responseMimeType?: string } = { temperature };
   if (jsonMode) generationConfig.responseMimeType = 'application/json';
 
   // Stringify once — reused across every retry attempt.

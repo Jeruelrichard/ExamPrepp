@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   ExamPrepp design tokens (Tailwind v4 @theme)
+   These generate utilities, e.g.:
+     bg-indigo, text-indigo, border-indigo
+     bg-surface, text-ink, text-success
+     font-body, font-display, font-wordmark
+   Brand source of truth: CLAUDE.md / PRD §11.2
+   ───────────────────────────────────────────── */
+@theme {
+  /* Colour */
+  --color-indigo: #4f46e5;        /* Primary — Deep Indigo */
+  --color-indigo-light: #818cf8;  /* Indigo-400, for dark backgrounds */
+  --color-ink: #111827;           /* Text / Ink */
+  --color-surface: #f9fafb;       /* Off-white card / section background */
+  --color-success: #10b981;       /* Verified / success — functional use only */
+  /* NOTE: amber is intentionally absent — forbidden by the design system. */
+
+  /* Type */
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-wordmark: "Dancing Script", cursive;
+
+  /* Radius — 12–14px on cards and inputs */
+  --radius-card: 14px;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background-color: #ffffff;
+}
+
+/* Benefits section — a soft light glow at top fading into a purple→indigo
+   vertical gradient, so the section reads with depth instead of a flat slab. */
+.benefits-glow {
+  background:
+    radial-gradient(70% 55% at 50% 0%, rgba(255, 255, 255, 0.14), transparent 60%),
+    linear-gradient(180deg, #6760c7 0%, #4f46e5 100%);
+}
+
+/* Final CTA — a contained indigo gradient panel with a soft top highlight,
+   so the closing CTA reads as a distinct "finale" without recoloring the band. */
+.cta-card {
+  background:
+    radial-gradient(90% 120% at 50% -10%, rgba(255, 255, 255, 0.18), transparent 55%),
+    linear-gradient(135deg, #4f46e5 0%, #6366f1 45%, #818cf8 100%);
+}
+
+/* Soft indigo radial wash behind the hero (mirrors Jennifer's Figma gradient,
+   which fades from an indigo glow to white). */
+.hero-glow {
+  background:
+    radial-gradient(60% 45% at 78% 28%, rgba(79, 70, 229, 0.16), transparent 70%),
+    radial-gradient(55% 40% at 8% 8%, rgba(129, 140, 248, 0.14), transparent 72%),
+    #ffffff;
+}

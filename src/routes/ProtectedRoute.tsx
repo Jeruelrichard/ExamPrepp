@@ -1,25 +1,28 @@
 import type { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 /**
- * ProtectedRoute — auth gate STUB.
+ * ProtectedRoute — real Supabase session gate.
  *
- * TODO(auth): replace PLACEHOLDER_IS_AUTHENTICATED with a real Supabase
- * session check (e.g. a useAuth() hook reading supabase.auth.getSession()).
- * Until auth is wired, this intentionally lets everything through so the
- * team can build and review the /app screens without logging in.
- *
- * When auth lands: if the user is unauthenticated, redirect to /login and
- * remember where they were headed via location state so we can send them
+ * While the initial session check is in flight we render nothing (avoids a
+ * flash of the login page). If there's no session, redirect to /login and
+ * remember where the user was headed (location state) so we can send them
  * back after a successful login.
  */
-const PLACEHOLDER_IS_AUTHENTICATED = true;
-
 export default function ProtectedRoute({ children }: { children: ReactNode }) {
+  const { session, loading } = useAuth();
   const location = useLocation();
-  const isAuthenticated = PLACEHOLDER_IS_AUTHENTICATED;
 
-  if (!isAuthenticated) {
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-surface text-sm text-ink/50">
+        Loading…
+      </div>
+    );
+  }
+
+  if (!session) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 

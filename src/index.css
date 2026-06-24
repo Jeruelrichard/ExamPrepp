@@ -17,6 +17,11 @@
   --color-success: #10b981;       /* Verified / success — functional use only */
   /* NOTE: amber is intentionally absent — forbidden by the design system. */
 
+  /* Auth pages (Jennifer's Figma) */
+  --color-lavender: #cdc8f4;      /* Filled pill input background */
+  --color-lavender-soft: #dcd8f7; /* Divider band */
+  --color-navy: #1f2533;          /* Dark pill primary button + desktop brand panel */
+
   /* Type */
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;

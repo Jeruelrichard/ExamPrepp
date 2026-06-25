@@ -1,5 +1,6 @@
+import type { ComponentType } from 'react';
 import { useExamPrepp } from '../hooks/useExamPrepp';
-import { UploadCloud } from '../components/icons';
+import { UploadCloud, Notes, Book } from '../components/icons';
 
 /**
  * NewPrep — the "Upload Your Materials" workspace screen (Jennifer's Figma,
@@ -49,12 +50,14 @@ export default function NewPrep({ className = '' }: { className?: string }) {
           <UploadColumn
             title="Past Questions"
             subtitle="Upload past exam questions"
+            icon={Notes}
             files={pastQuestionFiles}
             onPick={setPastQuestionFiles}
           />
           <UploadColumn
             title="Lecture Notes"
             subtitle="Upload your lecture slides or notes"
+            icon={Book}
             files={lectureNoteFiles}
             onPick={setLectureNoteFiles}
             disabled={!hasPastQuestions}
@@ -76,7 +79,7 @@ export default function NewPrep({ className = '' }: { className?: string }) {
           type="button"
           onClick={handleAnalyze}
           disabled={!canAnalyze}
-          className="w-full max-w-[240px] rounded-[14px] bg-indigo px-6 py-3 font-display font-semibold text-white transition hover:bg-indigo/90 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-indigo"
+          className="w-full max-w-[240px] rounded-[14px] bg-indigo px-6 py-3 font-display font-semibold text-white transition hover:bg-indigo/90 disabled:cursor-not-allowed disabled:bg-indigo/40 disabled:hover:bg-indigo/40"
         >
           Analyze
         </button>
@@ -90,12 +93,14 @@ export default function NewPrep({ className = '' }: { className?: string }) {
 function UploadColumn({
   title,
   subtitle,
+  icon: Icon,
   files,
   onPick,
   disabled = false,
 }: {
   title: string;
   subtitle: string;
+  icon: ComponentType<{ className?: string }>;
   files: File[];
   onPick: (files: File[]) => void;
   disabled?: boolean;
@@ -109,18 +114,23 @@ function UploadColumn({
 
   return (
     <div
-      className={`flex flex-col items-center rounded-[14px] bg-lavender px-4 py-5 text-center ${
-        disabled ? 'opacity-40' : ''
+      className={`flex flex-col rounded-[14px] bg-lavender p-4 ${
+        disabled ? 'opacity-50' : ''
       }`}
     >
-      <h2 className="font-display text-base font-bold sm:text-lg">{title}</h2>
-      <p className="mt-2 text-xs text-ink/70 sm:text-sm">{subtitle}</p>
-      <p className="mt-4 max-w-full truncate text-xs text-ink/60" title={status}>
+      <div className="flex items-center gap-2.5">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/50 text-indigo">
+          <Icon className="h-5 w-5" />
+        </span>
+        <h2 className="font-display text-base font-bold sm:text-lg">{title}</h2>
+      </div>
+      <p className="mt-3 text-xs text-ink/70 sm:text-sm">{subtitle}</p>
+      <p className="mt-3 max-w-full truncate text-xs text-ink/60" title={status}>
         {status}
       </p>
       <label
-        className={`mt-3 w-full rounded-[12px] bg-indigo px-4 py-2.5 text-sm font-semibold text-white transition ${
-          disabled ? 'pointer-events-none' : 'cursor-pointer hover:bg-indigo/90'
+        className={`mt-3 w-full rounded-[12px] px-4 py-2.5 text-center text-sm font-semibold text-white transition ${
+          disabled ? 'pointer-events-none bg-indigo/60' : 'cursor-pointer bg-indigo hover:bg-indigo/90'
         }`}
       >
         Choose file

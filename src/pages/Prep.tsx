@@ -1,12 +1,12 @@
-/** Prep — Phase 1 (past questions) + Phase 2 (study guide) workspace. Shell only. */
+import EmptyState from '../components/EmptyState';
+
+/**
+ * Prep — the "Workspace" tab (Jennifer's Figma, iPhone screen 4).
+ *
+ * Shown as the empty/zero state for now. This route will grow into the real
+ * Phase 1 (past-question upload + predictions) and Phase 2 (notes upload +
+ * study guide) flow, built from the /dev prototype and wired to useExamPrepp.
+ */
 export default function Prep({ className = '' }: { className?: string }) {
-  return (
-    <section className={className}>
-      <h1 className="font-display text-2xl font-bold">New prep</h1>
-      <p className="mt-2 text-ink/60">
-        Shell — Phase 1 upload &amp; predictions, then Phase 2 notes upload &amp; study
-        guide will live here (wired to <code>useExamPrepp</code>).
-      </p>
-    </section>
-  );
+  return <EmptyState className={className} message="Upload your past questions" />;
 }

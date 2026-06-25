@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Prep from './pages/Prep';
+import Badges from './pages/Badges';
 import Flashcards from './pages/Flashcards';
 import Quiz from './pages/Quiz';
 import NotFound from './pages/NotFound';
@@ -21,7 +22,8 @@ import HookTestHarness from './dev/HookTestHarness';
  *
  * Protected: /app         layout route (AppLayout + <Outlet/>), gated by ProtectedRoute
  *              index       dashboard
- *              prep        Phase 1 / Phase 2 workspace
+ *              prep        Phase 1 / Phase 2 workspace ("Workspace" tab)
+ *              badges      soulbound credential gallery
  *              flashcards  flashcard view
  *              quiz        quiz view
  */
@@ -44,6 +46,7 @@ export default function App() {
       >
         <Route index element={<Dashboard />} />
         <Route path="prep" element={<Prep />} />
+        <Route path="badges" element={<Badges />} />
         <Route path="flashcards" element={<Flashcards />} />
         <Route path="quiz" element={<Quiz />} />
       </Route>

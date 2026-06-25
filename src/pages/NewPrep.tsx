@@ -19,7 +19,7 @@ import { UploadCloud, Notes, Book } from '../components/icons';
 const MIN_PAST_QUESTIONS = 3;
 
 export default function NewPrep({ className = '' }: { className?: string }) {
-  const { pastQuestionFiles, setPastQuestionFiles, lectureNoteFiles, setLectureNoteFiles } =
+  const { pastQuestionFiles, setPastQuestionFiles, lectureNoteFiles, setLectureNoteFiles, reset } =
     useExamPrepp();
 
   const hasPastQuestions = pastQuestionFiles.length > 0;
@@ -36,14 +36,23 @@ export default function NewPrep({ className = '' }: { className?: string }) {
     <section className={className}>
       {/* Upload card */}
       <div className="rounded-[14px] border border-black/10 bg-white p-5 sm:p-6">
-        <div className="flex items-center gap-4">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-lavender text-indigo">
-            <UploadCloud className="h-6 w-6" />
-          </span>
-          <div>
-            <h1 className="font-display text-xl font-bold sm:text-2xl">Upload Your Materials</h1>
-            <p className="text-sm text-ink/60">Add your past questions and lecture notes</p>
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-lavender text-indigo">
+              <UploadCloud className="h-6 w-6" />
+            </span>
+            <div>
+              <h1 className="font-display text-xl font-bold sm:text-2xl">Upload Your Materials</h1>
+              <p className="text-sm text-ink/60">Add your past questions and lecture notes</p>
+            </div>
           </div>
+          <button
+            type="button"
+            onClick={reset}
+            className="shrink-0 rounded-lg border border-black/15 px-3 py-1.5 text-sm font-semibold text-ink/70 transition hover:border-black/30 hover:text-ink"
+          >
+            Reset
+          </button>
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4">
@@ -79,7 +88,7 @@ export default function NewPrep({ className = '' }: { className?: string }) {
           type="button"
           onClick={handleAnalyze}
           disabled={!canAnalyze}
-          className="w-full max-w-[240px] rounded-[14px] bg-indigo px-6 py-3 font-display font-semibold text-ink transition hover:bg-indigo/90 disabled:cursor-not-allowed disabled:bg-indigo/40 disabled:hover:bg-indigo/40"
+          className="w-full max-w-[240px] rounded-[14px] bg-indigo px-6 py-3 font-display font-semibold text-ink transition hover:bg-indigo/90 disabled:cursor-not-allowed disabled:bg-indigo/40 disabled:text-ink/40 disabled:hover:bg-indigo/40"
         >
           Analyze
         </button>

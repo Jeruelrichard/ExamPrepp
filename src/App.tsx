@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Prep from './pages/Prep';
 import Badges from './pages/Badges';
 import Flashcards from './pages/Flashcards';
+import Settings from './pages/Settings';
 import Quiz from './pages/Quiz';
 import NotFound from './pages/NotFound';
 import HookTestHarness from './dev/HookTestHarness';
@@ -25,6 +26,7 @@ import HookTestHarness from './dev/HookTestHarness';
  *              prep        Phase 1 / Phase 2 workspace ("Workspace" tab)
  *              badges      soulbound credential gallery
  *              flashcards  flashcard view
+ *              settings    settings (theme/billing — placeholder; holds log out)
  *              quiz        quiz view
  */
 export default function App() {
@@ -48,6 +50,7 @@ export default function App() {
         <Route path="prep" element={<Prep />} />
         <Route path="badges" element={<Badges />} />
         <Route path="flashcards" element={<Flashcards />} />
+        <Route path="settings" element={<Settings />} />
         <Route path="quiz" element={<Quiz />} />
       </Route>
 

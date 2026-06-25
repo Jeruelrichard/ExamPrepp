@@ -65,10 +65,10 @@ export default function NewPrep({ className = '' }: { className?: string }) {
         </div>
 
         {fewPastQuestions && (
-          <p className="mt-4 rounded-lg bg-indigo/10 px-4 py-3 text-sm text-indigo">
+          <p className="mt-4 rounded-lg bg-red-500/10 px-4 py-3 text-sm text-red-600">
             You've added {pastQuestionFiles.length} past question
             {pastQuestionFiles.length === 1 ? '' : 's'}. For the most accurate predictions,
-            upload at least 3–5 years of past papers — you can still run the analysis.
+            upload at least 3–5 years of past papers.
           </p>
         )}
       </div>
@@ -79,7 +79,7 @@ export default function NewPrep({ className = '' }: { className?: string }) {
           type="button"
           onClick={handleAnalyze}
           disabled={!canAnalyze}
-          className="w-full max-w-[240px] rounded-[14px] bg-indigo px-6 py-3 font-display font-semibold text-white transition hover:bg-indigo/90 disabled:cursor-not-allowed disabled:bg-indigo/40 disabled:hover:bg-indigo/40"
+          className="w-full max-w-[240px] rounded-[14px] bg-indigo px-6 py-3 font-display font-semibold text-ink transition hover:bg-indigo/90 disabled:cursor-not-allowed disabled:bg-indigo/40 disabled:hover:bg-indigo/40"
         >
           Analyze
         </button>

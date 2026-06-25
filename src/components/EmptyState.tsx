@@ -27,7 +27,7 @@ export default function EmptyState({
       <p className="mt-6 max-w-xs font-display text-base text-ink/70">{message}</p>
 
       <Link
-        to="/app/prep"
+        to="/app/prep/new"
         className="mt-8 inline-flex items-center gap-2 rounded-[14px] bg-indigo px-5 py-2.5 font-display text-sm font-semibold text-white transition hover:bg-indigo/90"
       >
         <Plus className="h-4 w-4" />

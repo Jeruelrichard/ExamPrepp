@@ -152,6 +152,15 @@ export function Plus({ className = base }: IconProps) {
   );
 }
 
+export function UploadCloud({ className = base }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M20.4 14.5A5 5 0 0 0 17 6h-1.3A8 8 0 1 0 4 14.9" />
+      <path d="M12 19v-7M9 15l3-3 3 3" />
+    </svg>
+  );
+}
+
 export function Grid({ className = base }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

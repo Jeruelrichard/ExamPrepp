@@ -38,29 +38,46 @@ export default function EmptyState({
 }
 
 /**
- * Decorative stacked-files mark in the brand's indigo/lavender family.
- * Placeholder for the design's purple files illustration.
+ * Decorative "sad folder" mascot — placeholder for Jennifer's purple files
+ * illustration. Uses a softer medium-purple (not the deep brand indigo) to match
+ * the design's lighter, friendlier mark, with sparkles + a glum face.
  */
 function FilesIllustration({ className = '' }: { className?: string }) {
+  const fill = '#9b8bea';
+  const flap = '#8a79e4';
+  const line = '#5d4fc7';
+  const accent = '#7c6fd9';
   return (
-    <svg className={className} viewBox="0 0 120 110" fill="none" aria-hidden="true">
-      {/* back sheet */}
-      <rect x="28" y="14" width="64" height="80" rx="8" fill="var(--color-lavender)" opacity="0.55" />
-      {/* mid sheet */}
-      <rect x="20" y="22" width="64" height="80" rx="8" fill="var(--color-lavender)" />
-      {/* front folder */}
+    <svg className={className} viewBox="0 0 120 116" fill="none" aria-hidden="true">
+      {/* sparkles + dots */}
+      <path d="M30 22l1.6 4.4L36 28l-4.4 1.6L30 34l-1.6-4.4L24 28l4.4-1.6Z" fill={accent} />
+      <path d="M92 26l1.2 3.4L96 31l-2.8 1.6L92 36l-1.2-3.4L88 31l2.8-1.6Z" fill={accent} />
+      <circle cx="100" cy="46" r="2.4" fill={accent} />
+      <circle cx="22" cy="86" r="3" fill="none" stroke={accent} strokeWidth="2.4" />
+      <circle cx="98" cy="84" r="2.6" fill="none" stroke={accent} strokeWidth="2.4" />
+
+      {/* back tab */}
+      <path d="M30 40h22l8 8h-30Z" fill={flap} stroke={line} strokeWidth="3" strokeLinejoin="round" />
+      {/* folder body */}
       <path
-        d="M12 36a8 8 0 0 1 8-8h20l8 9h32a8 8 0 0 1 8 8v37a8 8 0 0 1-8 8H20a8 8 0 0 1-8-8V36Z"
-        fill="var(--color-indigo)"
-      />
-      {/* upward arrow — evokes "upload" */}
-      <path
-        d="M52 78V58m0 0-8 8m8-8 8 8"
-        stroke="#ffffff"
-        strokeWidth="4"
-        strokeLinecap="round"
+        d="M28 44h64a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4H28a4 4 0 0 1-4-4V48a4 4 0 0 1 4-4Z"
+        fill={fill}
+        stroke={line}
+        strokeWidth="3"
         strokeLinejoin="round"
       />
+      {/* front flap */}
+      <path
+        d="M22 58l6-2h64l6 2-6 30a4 4 0 0 1-4 3H32a4 4 0 0 1-4-3Z"
+        fill={flap}
+        stroke={line}
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      {/* glum face */}
+      <circle cx="50" cy="72" r="2.6" fill={line} />
+      <circle cx="70" cy="72" r="2.6" fill={line} />
+      <path d="M52 82a8 8 0 0 1 16 0" stroke={line} strokeWidth="3" strokeLinecap="round" fill="none" />
     </svg>
   );
 }

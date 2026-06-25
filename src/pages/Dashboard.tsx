@@ -24,15 +24,17 @@ export default function Dashboard({ className = '' }: { className?: string }) {
     <section className={className}>
       <h1 className="font-display text-3xl font-bold">Hi, {firstName}</h1>
 
-      {/* Stat squares — indigo fill, number over label (matches Figma) */}
+      {/* Stat squares — lavender fill, dark text, number over label (matches Figma) */}
       <div className="mt-6 grid grid-cols-3 gap-3 sm:gap-4">
         {STATS.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-[14px] bg-indigo px-3 py-4 text-white shadow-sm"
+            className="rounded-[14px] bg-lavender px-3 py-5 sm:px-4"
           >
-            <p className="font-display text-2xl font-bold leading-none">{stat.value}</p>
-            <p className="mt-2 text-xs leading-tight text-white/80 sm:text-sm">
+            <p className="font-display text-2xl font-bold leading-none text-ink">
+              {stat.value}
+            </p>
+            <p className="mt-3 whitespace-nowrap text-[11px] leading-tight text-ink/70 sm:text-sm">
               {stat.label}
             </p>
           </div>

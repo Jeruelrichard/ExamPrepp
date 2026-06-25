@@ -74,6 +74,57 @@ export function useExamPrepp() {
     setIsGenerating(false);
   }, [pastQuestionFiles, lectureNoteFiles, predictions]);
 
+  // ── Unified flow — run Phase 1 then Phase 2 from one trigger ──
+  // To the user this is a single "send": the UI reveals predictions first
+  // (while isAnalyzing flips off), then the study guide (while isGenerating runs).
+  // Under the hood it's still two separate Gemini calls with their own prompts.
+  // Phase 2 receives Phase 1's predictions DIRECTLY (not via the `predictions`
+  // state, which React hasn't committed yet within this same async run).
+  const runAll = useCallback(async () => {
+    // Clear any prior run.
+    setPhaseOneError(null);
+    setPhaseOneWarning(null);
+    setPhaseTwoError(null);
+    setPredictions([]);
+    setCourse('');
+    setSummary('');
+    setFollowUp('');
+    setGuide('');
+    setTopicsCovered([]);
+
+    // ── Phase 1 — analyze past questions ──
+    setIsAnalyzing(true);
+    const p1 = await analyzePastQuestions(pastQuestionFiles);
+    setPhaseOneWarning(p1.warning);
+    setIsAnalyzing(false);
+
+    if (p1.error || !p1.data) {
+      setPhaseOneError(p1.error ?? 'No predictions were returned.');
+      return; // don't proceed to Phase 2
+    }
+
+    setCourse(p1.data.course);
+    setPredictions(p1.data.predictions);
+    setSummary(p1.data.summary);
+    setFollowUp(p1.data.followUp);
+
+    // ── Phase 2 — generate study guide (uses Phase 1 output directly) ──
+    setIsGenerating(true);
+    const p2 = await generateStudyGuide(
+      pastQuestionFiles,
+      lectureNoteFiles,
+      p1.data.predictions,
+    );
+    setIsGenerating(false);
+
+    if (p2.error) {
+      setPhaseTwoError(p2.error);
+    } else if (p2.data) {
+      setGuide(p2.data.guide);
+      setTopicsCovered(p2.data.topicsCovered);
+    }
+  }, [pastQuestionFiles, lectureNoteFiles]);
+
   // ── Reset all state back to initial ────────────
   const reset = useCallback(() => {
     setPastQuestionFiles([]);
@@ -112,6 +163,7 @@ export function useExamPrepp() {
     runPhaseOne,
     setLectureNoteFiles,
     runPhaseTwo,
+    runAll,
     reset,
   };
 }

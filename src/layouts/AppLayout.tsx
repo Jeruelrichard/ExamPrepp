@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { ExamPreppProvider } from '../context/ExamPreppContext';
 import { signOut } from '../services/auth';
 import Logo from '../components/Logo';
 import { Grid, Briefcase, Award, Cards, Settings, LogOut } from '../components/icons';
@@ -36,6 +37,7 @@ export default function AppLayout({ className = '' }: { className?: string }) {
   }
 
   return (
+    <ExamPreppProvider>
     <div className={`min-h-screen bg-surface text-ink lg:grid lg:grid-cols-[15rem_1fr] ${className}`}>
       {/* ── Sidebar (desktop) ───────────────────── */}
       <aside className="sticky top-0 hidden h-screen flex-col border-r border-black/5 bg-white px-4 py-6 lg:flex">
@@ -109,6 +111,7 @@ export default function AppLayout({ className = '' }: { className?: string }) {
         </main>
       </div>
     </div>
+    </ExamPreppProvider>
   );
 }
 

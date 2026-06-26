@@ -1,12 +1,19 @@
+import { usePrepStarted } from '../context/ExamPreppContext';
 import EmptyState from '../components/EmptyState';
+import PrepResults from '../components/PrepResults';
 
 /**
  * Prep — the "Workspace" tab (Jennifer's Figma, iPhone screen 4).
  *
- * Shown as the empty/zero state for now. This route will grow into the real
- * Phase 1 (past-question upload + predictions) and Phase 2 (notes upload +
- * study guide) flow, built from the /dev prototype and wired to useExamPrepp.
+ * If a prep run is in progress or done, show the shared PrepResults view so the
+ * user's work is still here when they return to the tab. Otherwise show the
+ * empty state inviting a New Prep. State lives in the app-level ExamPrepp
+ * context, so it survives switching between tabs within the session.
  */
 export default function Prep({ className = '' }: { className?: string }) {
+  const started = usePrepStarted();
+
+  if (started) return <PrepResults className={className} />;
+
   return <EmptyState className={className} message="Upload your past questions" />;
 }

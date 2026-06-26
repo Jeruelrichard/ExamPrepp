@@ -1,0 +1,67 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ExamPrepp thinking">
+  <style>
+    /*
+     * Concept B — Rising Insight, animated (thinking state)
+     * Rays shimmer outward from centre: middle fires first, outer rays follow.
+     * Book breathes slowly beneath them.
+     * Rotation is intentionally absent — this mark rises, it does not spin.
+     */
+
+    .ep-ray {
+      animation: ep-shimmer 1.6s ease-in-out infinite;
+    }
+    .ep-book {
+      animation: ep-breathe 1.6s ease-in-out infinite;
+    }
+
+    @keyframes ep-shimmer {
+      0%, 100% { opacity: 0.2; }
+      50%       { opacity: 1;   }
+    }
+
+    @keyframes ep-breathe {
+      0%, 100% { opacity: 0.82; }
+      50%       { opacity: 1;    }
+    }
+
+    /* Respect reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .ep-ray  { animation: none !important; opacity: 1   !important; }
+      .ep-book { animation: none !important; opacity: 1   !important; }
+    }
+  </style>
+
+  <rect width="48" height="48" rx="13" fill="#4F46E5"/>
+
+  <!--
+    Rays — five lines fanning upward from the book's spine.
+    Animation fires centre-out: ray 1 leads, rays 2+3 follow,
+    rays 4+5 trail. Each pair shares the same delay so the
+    shimmer feels symmetric and intentional.
+  -->
+  <g stroke="#FFFFFF" stroke-linecap="round" stroke-width="2.3">
+    <!-- Centre ray — fires first -->
+    <line class="ep-ray" style="animation-delay: 0s"
+          x1="24"    y1="20.5"  x2="24"    y2="7.5"/>
+    <!-- Inner left -->
+    <line class="ep-ray" style="animation-delay: 0.2s"
+          x1="22.29" y1="20.8"  x2="18.53" y2="10.46"/>
+    <!-- Inner right -->
+    <line class="ep-ray" style="animation-delay: 0.2s"
+          x1="25.71" y1="20.8"  x2="29.47" y2="10.46"/>
+    <!-- Outer left — trails, naturally dimmer -->
+    <line class="ep-ray" style="animation-delay: 0.4s; opacity: 0.55"
+          x1="20.79" y1="21.67" x2="15"    y2="14.78"/>
+    <!-- Outer right -->
+    <line class="ep-ray" style="animation-delay: 0.4s; opacity: 0.55"
+          x1="27.21" y1="21.67" x2="33"    y2="14.78"/>
+  </g>
+
+  <!-- Book — breathes slowly, anchors the mark -->
+  <g class="ep-book">
+    <path d="M24,27 Q18.5,25.7 13.5,25.5 L13.5,34 Q18.5,35.2 24,36.3 Z" fill="#FFFFFF"/>
+    <path d="M24,27 Q29.5,25.7 34.5,25.5 L34.5,34 Q29.5,35.2 24,36.3 Z" fill="#FFFFFF"/>
+    <line x1="24" y1="27.3" x2="24" y2="35.9"
+          stroke="#4F46E5" stroke-width="1.1" stroke-linecap="round"/>
+  </g>
+</svg>

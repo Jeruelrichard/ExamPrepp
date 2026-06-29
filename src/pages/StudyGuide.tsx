@@ -9,7 +9,7 @@ import type { Flashcard, StudySession } from '../services/library';
  * StudyGuide — a saved Prep's study-guide reader (route /app/prep/:id).
  * Loads the session, then renders the focused StudyGuideView (16-13).
  *
- * "Turn into Flashcards" generates 30 cards from the stored guide, saves them as
+ * "Turn into Flashcards" generates 20 cards from the stored guide, saves them as
  * a flashcard set, and opens the viewer. "Turn into Quiz" is deferred — it routes
  * to the Quiz coming-soon placeholder for now.
  */

@@ -232,7 +232,7 @@ Output Format
 // ─────────────────────────────────────────────
 
 export const PROMPT_GENERATE_FLASHCARDS = `
-You are ExamPrepp. Based on the study guide below, create 12 high-quality flashcards
+You are ExamPrepp. Based on the study guide below, create 30 high-quality flashcards
 that help a student memorise the most important and exam-likely content.
 
 Return ONLY a raw JSON array. No preamble. No markdown fences. No explanation.

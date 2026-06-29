@@ -12,6 +12,7 @@
  * crashing the whole app.
  */
 import { createClient } from '@supabase/supabase-js';
+import type { Database } from './database.types';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -25,7 +26,7 @@ if (!isSupabaseConfigured) {
   );
 }
 
-export const supabase = createClient(
+export const supabase = createClient<Database>(
   url || 'http://localhost:54321',
   anonKey || 'placeholder-anon-key',
 );

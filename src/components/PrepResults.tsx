@@ -91,7 +91,7 @@ export default function PrepResults({ className = '' }: { className?: string }) 
         <button
           type="button"
           onClick={reset}
-          className="shrink-0 rounded-lg border border-black/15 px-3 py-1.5 text-sm font-semibold text-ink/70 transition hover:border-black/30 hover:text-ink"
+          className="shrink-0 rounded-lg border border-ink/15 px-3 py-1.5 text-sm font-semibold text-ink/70 transition hover:border-ink/30 hover:text-ink"
         >
           Start over
         </button>
@@ -102,7 +102,7 @@ export default function PrepResults({ className = '' }: { className?: string }) 
         {pastQuestionFiles.map((file, i) => (
           <li
             key={`${file.name}-${i}`}
-            className="flex items-center gap-3 rounded-[14px] border border-black/10 bg-white px-4 py-3"
+            className="flex items-center gap-3 rounded-[14px] border border-ink/10 bg-card px-4 py-3"
           >
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-lavender text-indigo">
               <Notes className="h-5 w-5" />
@@ -126,7 +126,7 @@ export default function PrepResults({ className = '' }: { className?: string }) 
 
       {/* Predictions */}
       {predictions.length > 0 && (
-        <section className="mt-4 rounded-[14px] border border-black/10 bg-white p-5 sm:p-6">
+        <section className="mt-4 rounded-[14px] border border-ink/10 bg-card p-5 sm:p-6">
           <h2 className="font-display text-lg font-bold">Predicted Exam Topics</h2>
           {course && <p className="mt-1 text-sm text-ink/60">Based on {course}</p>}
           {summary && (
@@ -141,7 +141,7 @@ export default function PrepResults({ className = '' }: { className?: string }) 
                   </span>
                   <span className="shrink-0 text-indigo">{p.probability}%</span>
                 </div>
-                <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-black/10">
+                <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-ink/10">
                   <div
                     className="h-full rounded-full bg-indigo transition-[width] duration-700"
                     style={{ width: `${p.probability}%` }}
@@ -160,7 +160,7 @@ export default function PrepResults({ className = '' }: { className?: string }) 
 
       {/* Study guide ready → open the focused reader (after auto-save) */}
       {guide && saving && (
-        <div className="mt-4 flex items-center gap-3 rounded-[14px] border border-black/10 bg-white px-5 py-5">
+        <div className="mt-4 flex items-center gap-3 rounded-[14px] border border-ink/10 bg-card px-5 py-5">
           <img src={markUrl} alt="" aria-hidden="true" className="h-8 w-8" />
           <p className="font-display text-base text-indigo">Saving your study guide…</p>
         </div>
@@ -172,7 +172,7 @@ export default function PrepResults({ className = '' }: { className?: string }) 
         <button
           type="button"
           onClick={() => navigate(`/app/prep/${savedId}`)}
-          className="mt-4 flex w-full items-center gap-4 rounded-[14px] border border-black/10 bg-white p-5 text-left transition hover:border-indigo/40 hover:shadow-sm"
+          className="mt-4 flex w-full items-center gap-4 rounded-[14px] border border-ink/10 bg-card p-5 text-left transition hover:border-indigo/40 hover:shadow-sm"
         >
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-lavender text-indigo">
             <Book className="h-5 w-5" />
@@ -214,7 +214,7 @@ function useThinkingMessage(isAnalyzing: boolean, isGenerating: boolean) {
 
 function ThinkingRow({ message }: { message: string }) {
   return (
-    <div className="mt-4 flex items-center gap-3 rounded-[14px] border border-black/10 bg-white px-5 py-5">
+    <div className="mt-4 flex items-center gap-3 rounded-[14px] border border-ink/10 bg-card px-5 py-5">
       <img src={markUrl} alt="" aria-hidden="true" className="h-8 w-8" />
       <p className="font-display text-base text-indigo">{message}</p>
     </div>

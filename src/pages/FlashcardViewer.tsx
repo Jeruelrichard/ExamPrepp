@@ -95,7 +95,7 @@ export default function FlashcardViewer() {
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-surface">
       {/* Back header */}
-      <header className="shrink-0 border-b border-black/10 bg-white px-4 py-4 sm:px-6">
+      <header className="shrink-0 border-b border-ink/10 bg-card px-4 py-4 sm:px-6">
         <button
           type="button"
           onClick={() => navigate('/app/flashcards')}
@@ -119,7 +119,7 @@ export default function FlashcardViewer() {
               <button
                 type="button"
                 onClick={restart}
-                className="rounded-[14px] border border-black/15 px-5 py-2.5 font-display text-sm font-semibold text-ink/80 transition hover:border-black/30"
+                className="rounded-[14px] border border-ink/15 px-5 py-2.5 font-display text-sm font-semibold text-ink/80 transition hover:border-ink/30"
               >
                 Study again
               </button>
@@ -157,7 +157,7 @@ export default function FlashcardViewer() {
                 </div>
 
                 {/* Back — answer */}
-                <div className="absolute inset-0 flex items-center justify-center rounded-[16px] border border-black/15 bg-white p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                <div className="absolute inset-0 flex items-center justify-center rounded-[16px] border border-ink/15 bg-card p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]">
                   <p className="font-display text-2xl font-bold leading-snug text-ink">{card.back}</p>
                 </div>
               </button>
@@ -173,7 +173,7 @@ export default function FlashcardViewer() {
                   className={`flex items-center gap-1.5 rounded-full border px-4 py-2 font-display text-sm font-semibold transition ${
                     grades[index] === 'correct'
                       ? 'border-success bg-success/10 text-success'
-                      : 'border-black/15 text-ink/70 hover:border-success/60'
+                      : 'border-ink/15 text-ink/70 hover:border-success/60'
                   }`}
                 >
                   <Check className="h-4 w-4 text-success" />
@@ -186,7 +186,7 @@ export default function FlashcardViewer() {
                   className={`flex items-center gap-1.5 rounded-full border px-4 py-2 font-display text-sm font-semibold transition ${
                     grades[index] === 'wrong'
                       ? 'border-red-500 bg-red-500/10 text-red-600'
-                      : 'border-black/15 text-ink/70 hover:border-red-400'
+                      : 'border-ink/15 text-ink/70 hover:border-red-400'
                   }`}
                 >
                   <XMark className="h-4 w-4 text-red-600" />

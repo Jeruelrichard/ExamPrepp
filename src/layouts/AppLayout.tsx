@@ -40,7 +40,7 @@ export default function AppLayout({ className = '' }: { className?: string }) {
     <ExamPreppProvider>
     <div className={`min-h-screen bg-surface text-ink lg:grid lg:grid-cols-[15rem_1fr] ${className}`}>
       {/* ── Sidebar (desktop) ───────────────────── */}
-      <aside className="sticky top-0 hidden h-screen flex-col border-r border-black/5 bg-white px-4 py-6 lg:flex">
+      <aside className="sticky top-0 hidden h-screen flex-col border-r border-ink/5 bg-card px-4 py-6 lg:flex">
         <Link to="/app" aria-label="ExamPrepp home" className="px-2">
           <Logo />
         </Link>
@@ -59,7 +59,7 @@ export default function AppLayout({ className = '' }: { className?: string }) {
         </nav>
 
         {/* Pinned to bottom */}
-        <div className="flex flex-col gap-1 border-t border-black/5 pt-3">
+        <div className="flex flex-col gap-1 border-t border-ink/5 pt-3">
           {user?.email && (
             <p className="truncate px-3 pb-1 text-xs text-ink/40" title={user.email}>
               {user.email}
@@ -79,7 +79,7 @@ export default function AppLayout({ className = '' }: { className?: string }) {
       {/* ── Main column ─────────────────────────── */}
       <div className="flex min-w-0 flex-col">
         {/* Top bar (mobile / tablet) */}
-        <header className="border-b border-black/5 bg-white lg:hidden">
+        <header className="border-b border-ink/5 bg-card lg:hidden">
           <div className="flex items-center justify-between gap-4 px-4 pt-4 sm:px-6">
             <Link to="/app" aria-label="ExamPrepp home">
               <Logo />
@@ -87,7 +87,7 @@ export default function AppLayout({ className = '' }: { className?: string }) {
             <NavLink
               to="/app/settings"
               aria-label="Settings"
-              className="rounded-lg border border-black/10 p-2 text-ink/70 transition hover:border-black/25 hover:text-ink"
+              className="rounded-lg border border-ink/10 p-2 text-ink/70 transition hover:border-ink/25 hover:text-ink"
             >
               <Settings className="h-5 w-5" />
             </NavLink>
@@ -119,7 +119,7 @@ export default function AppLayout({ className = '' }: { className?: string }) {
 
 function sideItemClass({ isActive }: { isActive: boolean }) {
   return `flex items-center gap-3 rounded-lg px-3 py-2 font-display text-sm transition-colors ${
-    isActive ? 'bg-indigo/10 font-semibold text-indigo' : 'text-ink/70 hover:bg-black/5 hover:text-ink'
+    isActive ? 'bg-indigo/10 font-semibold text-indigo' : 'text-ink/70 hover:bg-ink/5 hover:text-ink'
   }`;
 }
 

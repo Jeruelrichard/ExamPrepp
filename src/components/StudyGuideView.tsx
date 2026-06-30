@@ -56,7 +56,14 @@ export default function StudyGuideView({
         margin: 12,
         filename: `${safeName}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
+        // Always render the PDF light (readable) even if the app is in dark mode —
+        // onclone strips `dark` from the cloned DOM so prose stays dark-on-white.
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          onclone: (doc: Document) => doc.documentElement.classList.remove('dark'),
+        },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       })
       .from(articleRef.current)
@@ -66,7 +73,7 @@ export default function StudyGuideView({
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-surface">
       {/* Back header */}
-      <header className="shrink-0 border-b border-black/10 bg-white px-4 py-4 sm:px-6">
+      <header className="shrink-0 border-b border-ink/10 bg-card px-4 py-4 sm:px-6">
         <button
           type="button"
           onClick={onBack}
@@ -91,10 +98,10 @@ export default function StudyGuideView({
           </button>
         </div>
 
-        <div className="mt-4 min-h-0 flex-1 overflow-y-auto rounded-[14px] border border-black/10 bg-white p-5 sm:p-6">
+        <div className="mt-4 min-h-0 flex-1 overflow-y-auto rounded-[14px] border border-ink/10 bg-card p-5 sm:p-6">
           <article
             ref={articleRef}
-            className="prose prose-sm max-w-none prose-headings:font-display prose-headings:text-ink prose-a:text-indigo prose-strong:text-ink marker:text-ink/40"
+            className="prose prose-sm max-w-none dark:prose-invert prose-headings:font-display prose-headings:text-ink prose-a:text-indigo prose-strong:text-ink marker:text-ink/40"
           >
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{guide}</ReactMarkdown>
           </article>
@@ -102,13 +109,13 @@ export default function StudyGuideView({
       </div>
 
       {/* Fixed footer — CTAs always in view */}
-      <footer className="shrink-0 border-t border-black/10 bg-white px-4 py-4 sm:px-6">
+      <footer className="shrink-0 border-t border-ink/10 bg-card px-4 py-4 sm:px-6">
         <div className="mx-auto grid max-w-2xl grid-cols-2 gap-3">
           <button
             type="button"
             onClick={onTurnFlashcards}
             disabled={flashcardsLoading}
-            className="rounded-[14px] border border-black/15 px-4 py-3 text-center transition hover:border-black/30 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-[14px] border border-ink/15 px-4 py-3 text-center transition hover:border-ink/30 disabled:cursor-not-allowed disabled:opacity-60"
           >
             <span className="block font-display text-sm font-bold text-ink">
               {flashcardsLoading ? 'Generating…' : 'Turn into Flashcards'}

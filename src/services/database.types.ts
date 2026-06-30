@@ -49,6 +49,24 @@ export type Database = {
           },
         ]
       }
+      profiles: {
+        Row: {
+          id: string
+          theme: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          theme?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          theme?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       study_sessions: {
         Row: {
           course: string | null

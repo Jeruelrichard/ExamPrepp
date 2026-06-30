@@ -14,6 +14,14 @@
       rel="stylesheet"
     />
     <title>ExamPrepp — Stop guessing what to study</title>
+    <script>
+      // Apply the saved theme before paint to avoid a flash of the wrong theme.
+      try {
+        if (localStorage.getItem('examprepp-theme') === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

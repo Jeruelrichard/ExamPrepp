@@ -38,7 +38,7 @@ export default function NewPrep({ className = '' }: { className?: string }) {
 
   return (
     <section className={className}>
-      <div className="rounded-[14px] border border-black/10 bg-white p-5 sm:p-6">
+      <div className="rounded-[14px] border border-ink/10 bg-card p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-4">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-lavender text-indigo">
@@ -52,7 +52,7 @@ export default function NewPrep({ className = '' }: { className?: string }) {
           <button
             type="button"
             onClick={reset}
-            className="shrink-0 rounded-lg border border-black/15 px-3 py-1.5 text-sm font-semibold text-ink/70 transition hover:border-black/30 hover:text-ink"
+            className="shrink-0 rounded-lg border border-ink/15 px-3 py-1.5 text-sm font-semibold text-ink/70 transition hover:border-ink/30 hover:text-ink"
           >
             Reset
           </button>
@@ -126,7 +126,7 @@ function UploadColumn({
   return (
     <div className={`flex flex-col rounded-[14px] bg-lavender p-4 ${disabled ? 'opacity-50' : ''}`}>
       <div className="flex items-center gap-2.5">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/50 text-indigo">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-card/50 text-indigo">
           <Icon className="h-5 w-5" />
         </span>
         <h2 className="font-display text-base font-bold sm:text-lg">{title}</h2>

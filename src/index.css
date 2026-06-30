@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Enable class-based dark mode (toggled by adding `dark` to <html>). */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ─────────────────────────────────────────────
    ExamPrepp design tokens (Tailwind v4 @theme)
    These generate utilities, e.g.:
@@ -16,6 +19,7 @@
   --color-ink: #111827;           /* Text / Ink */
   --color-surface: #f9fafb;       /* Off-white card / section background */
   --color-success: #10b981;       /* Verified / success — functional use only */
+  --color-card: #ffffff;          /* Card/elevated surface (flips dark in .dark) */
   /* NOTE: amber is intentionally absent — forbidden by the design system. */
 
   /* Auth pages (Jennifer's Figma) */
@@ -30,6 +34,27 @@
 
   /* Radius — 12–14px on cards and inputs */
   --radius-card: 14px;
+}
+
+/* ─────────────────────────────────────────────
+   Dark theme — overrides the brand tokens when <html class="dark">.
+   Token-based utilities (bg-surface, bg-card, text-ink, bg-lavender, text-indigo,
+   and ink-alpha borders like border-ink/10) flip automatically.
+   Palette mirrors Jennifer's dark variant (moreScreens iPhone 16-28).
+   ───────────────────────────────────────────── */
+.dark {
+  --color-surface: #14151a;       /* page background */
+  --color-card: #20222b;          /* elevated card surface (was white) */
+  --color-ink: #f3f4f6;           /* primary text → near-white */
+  --color-indigo: #7c74ff;        /* brighter indigo for contrast on dark */
+  --color-indigo-light: #9aa2ff;
+  --color-lavender: #2d2a44;      /* indigo-tinted dark surface */
+  --color-lavender-soft: #2d2a44;
+  --color-navy: #20222b;
+}
+
+.dark body {
+  background-color: var(--color-surface);
 }
 
 html {

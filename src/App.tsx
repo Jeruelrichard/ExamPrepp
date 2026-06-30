@@ -7,8 +7,10 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Prep from './pages/Prep';
 import NewPrep from './pages/NewPrep';
+import StudyGuide from './pages/StudyGuide';
 import Badges from './pages/Badges';
 import Flashcards from './pages/Flashcards';
+import FlashcardViewer from './pages/FlashcardViewer';
 import Settings from './pages/Settings';
 import Quiz from './pages/Quiz';
 import NotFound from './pages/NotFound';
@@ -24,12 +26,14 @@ import HookTestHarness from './dev/HookTestHarness';
  *
  * Protected: /app         layout route (AppLayout + <Outlet/>), gated by ProtectedRoute
  *              index       dashboard
- *              prep        Workspace tab — empty/landing state
- *              prep/new    upload-materials form (started via "New Prep")
+ *              prep        Workspace tab — saved-Prep history (or empty state)
+ *              prep/new    upload-materials form → analyze flow
+ *              prep/:id    saved study-guide reader
  *              badges      soulbound credential gallery
- *              flashcards  flashcard view
+ *              flashcards  Flashcards tab — saved flashcard-set history
+ *              flashcards/:id  flashcard flip viewer
  *              settings    settings (theme/billing — placeholder; holds log out)
- *              quiz        quiz view
+ *              quiz        quiz — coming soon placeholder
  */
 export default function App() {
   return (
@@ -51,8 +55,10 @@ export default function App() {
         <Route index element={<Dashboard />} />
         <Route path="prep" element={<Prep />} />
         <Route path="prep/new" element={<NewPrep />} />
+        <Route path="prep/:id" element={<StudyGuide />} />
         <Route path="badges" element={<Badges />} />
         <Route path="flashcards" element={<Flashcards />} />
+        <Route path="flashcards/:id" element={<FlashcardViewer />} />
         <Route path="settings" element={<Settings />} />
         <Route path="quiz" element={<Quiz />} />
       </Route>

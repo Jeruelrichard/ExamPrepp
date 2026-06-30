@@ -2,6 +2,7 @@ import { useAuth } from '../context/AuthContext';
 import { useStudySessions } from '../hooks/useStudySessions';
 import EmptyState from '../components/EmptyState';
 import HistoryCard, { formatDate } from '../components/HistoryCard';
+import sadFolderUrl from '../assets/folder-sad.svg';
 
 /**
  * Dashboard — the post-login home (Jennifer's Figma, iPhone screen 2).
@@ -44,7 +45,7 @@ export default function Dashboard({ className = '' }: { className?: string }) {
       {/* Recent activity */}
       <h2 className="mt-10 font-display text-lg font-semibold">Recent Activity</h2>
       {recent.length === 0 ? (
-        <EmptyState className="mt-2" message="Nothing here yet!" />
+        <EmptyState className="mt-2" message="Nothing here yet!" icon={sadFolderUrl} />
       ) : (
         <ul className="mt-4 space-y-4">
           {recent.map((s) => (

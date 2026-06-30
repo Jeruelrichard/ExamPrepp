@@ -80,13 +80,13 @@ function Toggle({
       aria-checked={on}
       aria-label={label}
       onClick={onToggle}
-      className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${
+      className={`inline-flex h-7 w-12 shrink-0 items-center rounded-full px-1 transition-colors ${
         on ? 'bg-indigo' : 'bg-ink/20'
       }`}
     >
       <span
-        className={`absolute top-1 h-5 w-5 rounded-full bg-white shadow transition-transform ${
-          on ? 'translate-x-6' : 'translate-x-1'
+        className={`h-5 w-5 rounded-full bg-white shadow transition-transform ${
+          on ? 'translate-x-5' : 'translate-x-0'
         }`}
       />
     </button>

@@ -1,0 +1,13 @@
+{
+  "name": "ExamPrepp Study Credential",
+  "symbol": "EXAMPREPP",
+  "description": "A soulbound (non-transferable) credential issued by ExamPrepp, certifying completion of an AI-guided exam prep session. Permanently tied to its holder — it cannot be transferred or burned.",
+  "image": "https://examprepp-app.vercel.app/badge.svg",
+  "external_url": "https://examprepp-app.vercel.app",
+  "attributes": [
+    { "trait_type": "Issued By", "value": "ExamPrepp" },
+    { "trait_type": "Type", "value": "Soulbound Credential" },
+    { "trait_type": "Standard", "value": "Metaplex Core" },
+    { "trait_type": "Network", "value": "Solana Devnet" }
+  ]
+}

@@ -1,0 +1,16 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Placeholder ExamPrepp soulbound badge (500x500). Swap for Jennifer's final PNG. -->
+  <rect width="500" height="500" rx="48" fill="#4F46E5" />
+  <circle cx="250" cy="210" r="120" fill="#5b52ea" />
+  <circle cx="250" cy="210" r="120" stroke="#818CF8" stroke-width="4" />
+  <!-- open book -->
+  <path d="M250 168c-22-16-52-18-78-10v96c26-8 56-6 78 10 22-16 52-18 78-10v-96c-26-8-56-6-78 10Z" fill="#ffffff" />
+  <path d="M250 168v104" stroke="#4F46E5" stroke-width="6" stroke-linecap="round" />
+  <!-- rising rays -->
+  <path d="M250 120v-22M214 130l-12-19M286 130l12-19" stroke="#C7D2FE" stroke-width="7" stroke-linecap="round" />
+  <!-- verified check -->
+  <circle cx="335" cy="300" r="34" fill="#10B981" stroke="#ffffff" stroke-width="6" />
+  <path d="M321 300l10 10 18-20" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <text x="250" y="410" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-size="46" font-weight="700" fill="#ffffff">ExamPrepp</text>
+  <text x="250" y="446" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="20" fill="#C7D2FE">Soulbound Study Credential</text>
+</svg>

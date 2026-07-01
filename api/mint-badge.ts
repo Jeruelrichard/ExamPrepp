@@ -57,7 +57,9 @@ function getUmi(): Umi {
 }
 
 function getSupabaseAdmin() {
-  const url = process.env.SUPABASE_URL;
+  // The project URL isn't secret — reuse VITE_SUPABASE_URL if a server-only
+  // SUPABASE_URL isn't set. Only the SERVICE_ROLE key must stay server-side.
+  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) throw new Error('missing_supabase_admin');
   return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });

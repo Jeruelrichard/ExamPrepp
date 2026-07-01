@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ChevronLeft, Download, ShieldCheck } from './icons';
@@ -40,7 +40,7 @@ export default function StudyGuideView({
   badgeExplorerUrl?: string | null;
   onClaimBadge?: () => void;
 }) {
-  const articleRef = useRef<HTMLElement>(null);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
 
   // Lock background scroll + Escape to go back while the reader is open.
   useEffect(() => {
@@ -56,26 +56,10 @@ export default function StudyGuideView({
   }, [onBack]);
 
   async function handleDownload() {
-    if (!articleRef.current) return;
-    const html2pdf = (await import('html2pdf.js')).default;
-    const safeName = (title || 'study-guide').replace(/[^\w\s-]/g, '').trim() || 'study-guide';
-    await html2pdf()
-      .set({
-        margin: 12,
-        filename: `${safeName}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        // Always render the PDF light (readable) even if the app is in dark mode —
-        // onclone strips `dark` from the cloned DOM so prose stays dark-on-white.
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: '#ffffff',
-          onclone: (doc: Document) => doc.documentElement.classList.remove('dark'),
-        },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      })
-      .from(articleRef.current)
-      .save();
+    setDownloadError(null);
+    const { downloadStudyGuidePdf } = await import('../services/pdf');
+    const { error } = downloadStudyGuidePdf(title, guide);
+    if (error) setDownloadError(error);
   }
 
   return (
@@ -110,12 +94,10 @@ export default function StudyGuideView({
             </button>
           </div>
         </div>
+        {downloadError && <p className="mt-2 text-sm text-red-600">{downloadError}</p>}
 
         <div className="mt-4 min-h-0 flex-1 overflow-y-auto rounded-[14px] border border-ink/10 bg-card p-5 sm:p-6">
-          <article
-            ref={articleRef}
-            className="prose prose-sm max-w-none dark:prose-invert prose-headings:font-display prose-headings:text-ink prose-a:text-indigo prose-strong:text-ink marker:text-ink/40"
-          >
+          <article className="prose prose-sm max-w-none dark:prose-invert prose-headings:font-display prose-headings:text-ink prose-a:text-indigo prose-strong:text-ink marker:text-ink/40">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{guide}</ReactMarkdown>
           </article>
         </div>

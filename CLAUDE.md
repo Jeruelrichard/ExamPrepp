@@ -332,7 +332,7 @@ break JS template literals) are what make the embedded JSON reliably extractable
 - Flashcards/quiz use `responseMimeType: "application/json"`; Phase 1 does NOT
 - Always include an explicit JSON shape example in the prompt
 - Phase 1: keep the `===JSON===` / `===END===` markers around the JSON block so `extractMixedResponse()` can split it
-- Always parse with safeParseJSON() which strips markdown fences before JSON.parse()
+- ALWAYS parse with safeParseJSON() which strips markdown fences before JSON.parse()
 - If JSON.parse fails, return an error — do not try to salvage malformed output
 - The grounding instruction ("use only the uploaded documents") is non-negotiable
   and must appear in every prompt that touches student materials

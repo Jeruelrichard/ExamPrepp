@@ -14,6 +14,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      badge_mints: {
+        Row: {
+          asset_address: string | null
+          course: string | null
+          created_at: string
+          id: string
+          owner_address: string | null
+          session_id: string
+          status: string
+          title: string | null
+          tx_signature: string | null
+          user_id: string
+        }
+        Insert: {
+          asset_address?: string | null
+          course?: string | null
+          created_at?: string
+          id?: string
+          owner_address?: string | null
+          session_id: string
+          status?: string
+          title?: string | null
+          tx_signature?: string | null
+          user_id: string
+        }
+        Update: {
+          asset_address?: string | null
+          course?: string | null
+          created_at?: string
+          id?: string
+          owner_address?: string | null
+          session_id?: string
+          status?: string
+          title?: string | null
+          tx_signature?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "badge_mints_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "study_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       flashcard_sets: {
         Row: {
           cards: Json

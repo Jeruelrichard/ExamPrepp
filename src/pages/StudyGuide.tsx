@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import StudyGuideView from '../components/StudyGuideView';
+import type { BadgeState } from '../components/StudyGuideView';
 import { generateFlashcards } from '../services/gemini';
 import { getStudySession, saveFlashcardSet } from '../services/library';
 import type { Flashcard, StudySession } from '../services/library';
+import { claimBadge, getSessionBadge, explorerUrl } from '../services/badges';
 
 /**
  * StudyGuide — a saved Prep's study-guide reader (route /app/prep/:id).
@@ -24,6 +26,9 @@ export default function StudyGuide() {
   const [cardsLoading, setCardsLoading] = useState(false);
   const [cardsError, setCardsError] = useState<string | null>(null);
 
+  const [badgeState, setBadgeState] = useState<BadgeState>('idle');
+  const [badgeUrl, setBadgeUrl] = useState<string | null>(null);
+
   useEffect(() => {
     if (!id) return;
     let active = true;
@@ -34,11 +39,37 @@ export default function StudyGuide() {
       if (error) setLoadError(error);
       else setSession(data);
       setLoading(false);
+
+      // Reflect any existing badge for this prep.
+      const { data: badge } = await getSessionBadge(id);
+      if (!active || !badge) return;
+      if (badge.status === 'minted' && badge.txSignature) {
+        setBadgeState('minted');
+        setBadgeUrl(explorerUrl(badge.txSignature));
+      } else if (badge.status === 'pending') {
+        setBadgeState('pending');
+      }
     })();
     return () => {
       active = false;
     };
   }, [id]);
+
+  async function handleClaimBadge() {
+    if (!session || badgeState === 'minting') return;
+    setBadgeState('minting');
+    const { data, pending, error } = await claimBadge(session.id);
+    if (data) {
+      setBadgeState('minted');
+      setBadgeUrl(data.explorerUrl);
+    } else if (pending) {
+      setBadgeState('pending');
+    } else {
+      // Additive/non-blocking: soft error, allow retry.
+      console.warn('[ExamPrepp] badge claim:', error);
+      setBadgeState('error');
+    }
+  }
 
   async function handleTurnFlashcards() {
     if (!session?.guide) return;
@@ -101,6 +132,9 @@ export default function StudyGuide() {
       onTurnQuiz={() => navigate('/app/quiz')}
       flashcardsLoading={cardsLoading}
       flashcardsError={cardsError}
+      badgeState={badgeState}
+      badgeExplorerUrl={badgeUrl}
+      onClaimBadge={handleClaimBadge}
     />
   );
 }

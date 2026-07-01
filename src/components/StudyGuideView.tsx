@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { ChevronLeft, Download } from './icons';
+import { ChevronLeft, Download, ShieldCheck } from './icons';
+
+export type BadgeState = 'idle' | 'minting' | 'minted' | 'pending' | 'error';
 
 /**
  * StudyGuideView — focused study-guide reader (Jennifer's Figma, iPhone 16-13).
@@ -22,6 +24,9 @@ export default function StudyGuideView({
   onTurnQuiz,
   flashcardsLoading = false,
   flashcardsError = null,
+  badgeState = 'idle',
+  badgeExplorerUrl = null,
+  onClaimBadge,
 }: {
   title: string;
   guide: string;
@@ -31,6 +36,9 @@ export default function StudyGuideView({
   onTurnQuiz: () => void;
   flashcardsLoading?: boolean;
   flashcardsError?: string | null;
+  badgeState?: BadgeState;
+  badgeExplorerUrl?: string | null;
+  onClaimBadge?: () => void;
 }) {
   const articleRef = useRef<HTMLElement>(null);
 
@@ -86,16 +94,21 @@ export default function StudyGuideView({
 
       {/* Body */}
       <div className="mx-auto flex w-full max-w-2xl min-h-0 flex-1 flex-col px-4 py-5 sm:px-6">
-        <div className="flex shrink-0 items-center justify-between gap-3">
+        <div className="flex shrink-0 flex-wrap items-center justify-between gap-3">
           <h1 className="font-display text-xl font-bold sm:text-2xl">Your Study Guide</h1>
-          <button
-            type="button"
-            onClick={handleDownload}
-            className="inline-flex shrink-0 items-center gap-2 rounded-[12px] border border-indigo/40 px-4 py-2 text-sm font-semibold text-indigo transition hover:bg-indigo/5"
-          >
-            <Download className="h-4 w-4" />
-            Download PDF
-          </button>
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            {onClaimBadge && (
+              <BadgeButton state={badgeState} explorerUrl={badgeExplorerUrl} onClaim={onClaimBadge} />
+            )}
+            <button
+              type="button"
+              onClick={handleDownload}
+              className="inline-flex shrink-0 items-center gap-2 rounded-[12px] border border-indigo/40 px-4 py-2 text-sm font-semibold text-indigo transition hover:bg-indigo/5"
+            >
+              <Download className="h-4 w-4" />
+              Download PDF
+            </button>
+          </div>
         </div>
 
         <div className="mt-4 min-h-0 flex-1 overflow-y-auto rounded-[14px] border border-ink/10 bg-card p-5 sm:p-6">
@@ -136,5 +149,55 @@ export default function StudyGuideView({
         )}
       </footer>
     </div>
+  );
+}
+
+/**
+ * BadgeButton — the "Claim badge" affordance (additive; never blocks).
+ * minted → links to the Solana Explorer; pending/minting → disabled soft states.
+ */
+function BadgeButton({
+  state,
+  explorerUrl,
+  onClaim,
+}: {
+  state: BadgeState;
+  explorerUrl: string | null;
+  onClaim: () => void;
+}) {
+  if (state === 'minted' && explorerUrl) {
+    return (
+      <a
+        href={explorerUrl}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center gap-1.5 rounded-[12px] border border-success/40 px-4 py-2 text-sm font-semibold text-success transition hover:bg-success/5"
+      >
+        <ShieldCheck className="h-4 w-4" />
+        Badge minted ↗
+      </a>
+    );
+  }
+
+  const label =
+    state === 'minting'
+      ? 'Minting…'
+      : state === 'pending'
+        ? 'Credential pending'
+        : state === 'error'
+          ? 'Retry badge'
+          : 'Claim badge';
+  const disabled = state === 'minting' || state === 'pending';
+
+  return (
+    <button
+      type="button"
+      onClick={onClaim}
+      disabled={disabled}
+      className="inline-flex items-center gap-1.5 rounded-[12px] bg-indigo px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo/90 disabled:cursor-not-allowed disabled:opacity-60"
+    >
+      <ShieldCheck className="h-4 w-4" />
+      {label}
+    </button>
   );
 }

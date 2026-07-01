@@ -2,8 +2,10 @@ node_modules
 dist
 .env
 .env.local
+
 PITCH_DECK.md
 ExamPrepp_Pitch_Deck.pptx
+.VSCodeCounter
 
 # Claude Code local tooling (preview config + machine-local settings)
 .claude/

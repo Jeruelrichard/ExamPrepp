@@ -28,6 +28,17 @@ import {
 } from '@metaplex-foundation/umi';
 import bs58 from 'bs58';
 
+/**
+ * Decode a Solana secret key from either format:
+ *  - a JSON byte array `[12,34,...]` (Solana CLI / solana-keygen), or
+ *  - a base58 string (Phantom export).
+ */
+function decodeSecretKey(secret: string): Uint8Array {
+  const s = secret.trim();
+  if (s.startsWith('[')) return Uint8Array.from(JSON.parse(s) as number[]);
+  return bs58.decode(s);
+}
+
 // ── Umi (mint authority) — built once per cold start ──────────────
 let _umi: Umi | null = null;
 
@@ -39,7 +50,7 @@ function getUmi(): Umi {
   if (!secret) throw new Error('missing_mint_key');
 
   const umi = createUmi(rpc).use(mplCore());
-  const keypair = umi.eddsa.createKeypairFromSecretKey(bs58.decode(secret));
+  const keypair = umi.eddsa.createKeypairFromSecretKey(decodeSecretKey(secret));
   umi.use(keypairIdentity(keypair));
   _umi = umi;
   return umi;

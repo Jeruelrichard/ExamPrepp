@@ -25,8 +25,14 @@ if (!rpc || !secret) {
   process.exit(1);
 }
 
+// Accept either a JSON byte array `[12,34,...]` (Solana CLI) or a base58 string.
+function decodeSecretKey(s) {
+  const t = s.trim();
+  return t.startsWith('[') ? Uint8Array.from(JSON.parse(t)) : bs58.decode(t);
+}
+
 const umi = createUmi(rpc).use(mplCore());
-umi.use(keypairIdentity(umi.eddsa.createKeypairFromSecretKey(bs58.decode(secret))));
+umi.use(keypairIdentity(umi.eddsa.createKeypairFromSecretKey(decodeSecretKey(secret))));
 
 console.log('Mint authority (custody owner):', umi.identity.publicKey.toString());
 console.log('Minting sample soulbound badge on devnet…');

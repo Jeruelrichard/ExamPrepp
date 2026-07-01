@@ -89,14 +89,19 @@ design/   — Jennifer's CSS drops  (design/phase-one-tokens)
    - Generate quiz
    - Share
 
-### Post-study (blockchain layer)
-10. On quiz completion → mint soulbound Metaplex Core asset on Solana Devnet (mainnet later)
+### Post-study (blockchain layer) — IMPLEMENTED on `feat/soulbound-badges`
+10. Student clicks "Claim badge" on a completed prep → mint soulbound Metaplex Core asset on Solana Devnet
+    — INTERIM GATE: minting is authorized by ownership of a `study_sessions` row (a completed prep),
+      NOT quiz completion — the quiz isn't built yet. Idempotent per (user_id, session_id). Switch to
+      quiz-gating when the quiz ships.
+    — mints to BACKEND CUSTODY by default (the server wallet owns it); the endpoint accepts an optional
+      `ownerAddress` for a future claim-to-wallet toggle. Student needs no wallet for now.
     — non-transferable via PermanentFreezeDelegate plugin (frozen: true, authority: None)
-    — metadata: course name, topics covered, timestamp, issued by ExamPrepp
-    — backend wallet (Vercel Function) pays all fees and mints directly to the student's wallet
-    — student never signs or pays; they only need to provide a Phantom wallet address
+    — the mint lives in `/api/mint-badge.ts` (Vercel Function); records go in the `badge_mints` table;
+      the Badges tab reads that table (custody → not Helius-by-wallet). Metadata: static
+      `/public/badge-metadata.json`.
     — this is an ADDITIVE feature; it must NEVER block or delay the core AI flow
-    — if minting fails, log the error silently and let the user continue
+    — if minting fails, surface a soft "credential pending" and let the user continue
 
 ---
 
@@ -129,7 +134,7 @@ design/   — Jennifer's CSS drops  (design/phase-one-tokens)
 - Past question files and lecture note files are ALWAYS kept as separate arrays in state
 - Phase 2 always sends BOTH arrays to Gemini — do not drop the past question context
 - Solana minting ALWAYS goes through a Vercel Function — never from the frontend directly
-- `MINTING_WALLET_PRIVATE_KEY` must NEVER appear in any VITE_ prefixed variable
+- `MINT_AUTHORITY_SECRET_KEY` must NEVER appear in any VITE_ prefixed variable
 - Blockchain failures must NEVER surface as blocking errors in the UI — catch and log only
 
 ---
@@ -221,17 +226,20 @@ the three pieces; the JSON block is parsed with `safeParseJSON()`.
 # AI
 VITE_GEMINI_API_KEY=
 
-# Solana / Metaplex
-VITE_HELIUS_RPC_URL=          # e.g. https://devnet.helius-rpc.com/?api-key=YOUR_KEY
-VITE_SOLANA_NETWORK=          # "devnet" | "mainnet-beta"
+# App
+VITE_APP_URL=                 # app base URL (used for the badge metadata URI)
 
-# Minting wallet — NEVER expose in frontend; use only in Vercel Functions
-MINTING_WALLET_PRIVATE_KEY=   # base58 keypair that pays mint fees and signs transactions
+# Solana / Metaplex — server-side (Vercel Functions), NOT VITE_ prefixed
+SOLANA_RPC_URL=               # Helius devnet RPC, e.g. https://devnet.helius-rpc.com/?api-key=YOUR_KEY
+# Mint authority / fee-payer wallet — NEVER expose in frontend; Vercel Functions only.
+# Accepts a Solana CLI JSON byte array ([12,34,...]) OR a base58 secret key.
+MINT_AUTHORITY_SECRET_KEY=
 
 # Supabase
-VITE_SUPABASE_URL=
+VITE_SUPABASE_URL=            # frontend (anon)
 VITE_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=    # server-side only (Vercel Functions)
+SUPABASE_URL=                 # server-side (Vercel Functions)
+SUPABASE_SERVICE_ROLE_KEY=    # server-side only — bypasses RLS
 ```
 
 ---
@@ -248,12 +256,16 @@ SUPABASE_SERVICE_ROLE_KEY=    # server-side only (Vercel Functions)
 @metaplex-foundation/umi-signer-wallet-adapters  // walletAdapterIdentity()
 ```
 
-### How minting works
+### How minting works (as implemented)
 - Minting is done server-side in a **Vercel Function** (`/api/mint-badge.ts`)
-- The Vercel Function holds `MINTING_WALLET_PRIVATE_KEY` — the backend wallet that pays
-- The frontend calls the Vercel Function with `{ studentWalletAddress, course, topicsCovered }`
-- The function mints the Core asset directly to `studentWalletAddress` — student never signs
-- This means students with empty wallets can still receive badges — they only need a Phantom address
+- The Vercel Function holds `MINT_AUTHORITY_SECRET_KEY` — the backend wallet that pays AND custodies
+- The frontend calls it with a Supabase **Bearer JWT** and `{ sessionId, ownerAddress? }`. The function
+  auth-gates the JWT, verifies the caller owns that `study_sessions` row, and is idempotent per
+  (user_id, session_id)
+- Owner defaults to the **server custody** wallet (no student wallet needed). `ownerAddress` is optional
+  and reserved for a future claim-to-wallet toggle (claim later = mint direct to the student's wallet,
+  NOT a transfer — soulbound can't move)
+- Student never signs or pays
 
 ### Soulbound enforcement
 Use **PermanentFreezeDelegate** plugin at creation time:
@@ -293,7 +305,7 @@ This makes the asset non-transferable AND non-burnable. It cannot be moved from 
 - When switching to mainnet, add a priority fee + compute-unit limit instruction to transactions
 
 ### DO NOT
-- Do not put `MINTING_WALLET_PRIVATE_KEY` in any VITE_ variable — it would be exposed in the browser bundle
+- Do not put `MINT_AUTHORITY_SECRET_KEY` in any VITE_ variable — it would be exposed in the browser bundle
 - Do not use thirdweb for Solana — support was discontinued October 9, 2023
 - Do not use Polygon Amoy — we are on Solana only
 - Do not mint from the frontend — always go through the Vercel Function

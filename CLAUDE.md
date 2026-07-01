@@ -309,6 +309,11 @@ This makes the asset non-transferable AND non-burnable. It cannot be moved from 
 - Do not use thirdweb for Solana — support was discontinued October 9, 2023
 - Do not use Polygon Amoy — we are on Solana only
 - Do not mint from the frontend — always go through the Vercel Function
+- Do not remove the `package.json` override `"rpc-websockets": { "uuid": "^9.0.1" }` — without it the
+  bundled `/api/mint-badge` Vercel Function crashes with `ERR_REQUIRE_ESM` (rpc-websockets require()s an
+  ESM-only uuid). Verified live once fixed.
+- Do not use a plain catch-all in `vercel.json` — it must exclude `/api` (`"/((?!api/).*)"`) or the
+  Function 404s.
 
 ---
 
